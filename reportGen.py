@@ -1,7 +1,7 @@
 from openpyxl import Workbook, load_workbook
-import timestamp
+import timestamp, json
 
-strr=['document-uri":"','referrer":"','violated-directive":"','effective-directive":"','original-policy":"','disposition":"','blocked-uri":"','line-number":','source-file":"','status-code":','script-sample":"']
+strr=['document-uri','referrer','violated-directive','effective-directive','original-policy','disposition','blocked-uri','line-number','column-number','source-file','status-code','script-sample']
 
 
 
@@ -10,6 +10,10 @@ def deserialize(filePath):
         text_file = open(filePath)
         data = text_file.readlines()
         text_file.close()
+        data=str(data[0])
+        data=data.split('{"csp-report":',1)[1]
+        data=data[:-1]
+        data=json.loads(data)
         return data
     except:
         print("An exception occurred while opening the file")
@@ -24,23 +28,28 @@ def sort(strr,data,r):
     try:
         c=1
         for i in strr:
-            finalStr=(data.rsplit(i)[1]).split('"')[0]
-            wrtDataToXl(r,c,finalStr)
+            # print(data.get(i))
+            wrtDataToXl(r,c,str(data.get(i)))
             c=c+1
     except:
         print("an error occured during writing data to excel")
+
     
-    
-def genReport(filePath):
-    pathToCsvFile='SpreadSheet_'+timestamp.timestamp()+'.xlsx'
+def genReport(filePath,tmpdir):
+    pathToCsvFile=tmpdir+'/SpreadSheet_'+timestamp.timestamp()+'.xlsx'
     wb = Workbook()
     wb.save(pathToCsvFile)
     wb = load_workbook(pathToCsvFile)
     global sheet
     sheet = wb.active
     count=2
+    c=1
+    for i in strr:
+        wrtDataToXl(1,c,i)
+        c=c+1
+        
     for i in filePath:
-        data=str((deserialize(i)))
+        data=(deserialize(i))
         sort(strr,data,count)
         count+=1
     wb.save(pathToCsvFile)

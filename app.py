@@ -1,10 +1,8 @@
 from flask import Flask, request 
 from flask import send_file
-import random, os, reportGen, timestamp
+import reportGen, timestamp
 
-dir = r'./cpsReport'+str(random.random())+'_'+timestamp.timestamp()+'/'
 
-os.mkdir(dir)
 jsonFileList=[]
 
 
@@ -17,8 +15,8 @@ def foo():
         
         
     elif request.method=='POST':
-        # global jsonfileList
-        path= str(dir)+'reprot_'+str(random.random())+'_'+timestamp.timestamp()+'.json'
+        global jsonfileList
+        path= str(dirr)+'reprot_'+timestamp.timestamp()+'.json'
         data = request.get_data()
         f=open(path,'w')
         f.write(data.decode())
@@ -34,13 +32,14 @@ def foo():
 def report():
     
     try:    
-        pathtocsvfile=reportGen.genReport(jsonFileList)
+        pathtocsvfile=reportGen.genReport(jsonFileList,tmpdir)
         return send_file(pathtocsvfile, as_attachment=True)
 
     except:
         return 'an error occured while exporting'
     
-    finally:
-        pass
-
-app.run(host='0.0.0.0',port=80)
+def startServer(dir,tmpdirname):
+    global dirr, tmpdir
+    dirr=dir
+    tmpdir=tmpdirname
+    app.run(host='0.0.0.0',port=80)
