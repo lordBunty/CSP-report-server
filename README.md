@@ -1,7 +1,7 @@
 <h1 align="center">CSP-report-server</h1>
 
 ## Details
-CSP-report-server is a utility server to capture CSP report and export it to excel
+CSP-report-server is a utility server to capture content security policy reports and export it to excel
 utility is created using python on flask framework
 
 ## Requirements
