@@ -1,3 +1,4 @@
+<h1 align="center">CSP-report-server</h1>
 # CSP-report-server
 utility server to capture CSP report and export it to excel
 
@@ -10,7 +11,7 @@ you can modify the keys in the list strr define in rerpotGen.py file which needs
 
 ## 🚀 Usage
 
-To run server run the file main.py and it will create http server at port 80. \n
+To run server run the file main.py and it will create http server at port 80.
 execute below command to run server:
 
 ```sh
