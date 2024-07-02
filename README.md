@@ -1,5 +1,4 @@
 <h1 align="center">CSP-report-server</h1>
-<meta name="google-site-verification" content="w33YF9y1649jqqzqoMMexzmxB-oo-2ELMNygaQ4Coso" />
 
 ## Details
 CSP report server is a utility server to capture content security policy reports and export it to excel
